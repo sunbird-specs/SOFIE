@@ -15,10 +15,12 @@ Documentation is categorised into multiple sections:
 ## WorkFlow
 
 ### Registration of External Apps
+| |
 |![Alt Text](attachments/2016411649/2164949010.png)|```{identifier:"",name:"",logo:"",appName:"",packageId:"",target:{mimeType:[],contentType:[],....//Allcontentattributes},appDetails:{organization:""}}```|
 
 
 ### Sunbird Third Party App Interaction
+| |
 |![Alt Text](attachments/2016411649/2165604363.png)|```{referrerPackageId:"com.google.bolo",referenceID:"App generated Code",mimeType:"",vendorCode:"",contentUrl:"",profileContext:"{handle:'',avatar:''}"}```|
 
 
@@ -26,6 +28,75 @@ Documentation is categorised into multiple sections:
 ### Global Vendor Registration API
 ## Technical Specification for third party apps
 ### Param Data Supported
+<details>
+<summary>Expand Param Data</summary>
+<p>
+
+| Params | Description | Data Type|
+| referrerPackageId | Package details of referrer app | String |
+| referenceID | Reference ID to be sent back to sunbird app | String |
+| mimeType | Content MimeType | String |
+| authKey | Authorization Key for referrer app | String |
+| contentUrl | Url of the content | String |
+| profileContext | Name and Avatar in JSONified String | String |
+
+</p>
+</details>
+
 ### Summary Event Spec
+<details>
+<summary>Expand Summary Event</summary>
+<p>
+https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summary
+```
+{
+  "edata": {
+    "type": "", // Required. Type of summary. Free text. "session", "app", "tool" etc
+    "mode": "", // Optional.
+    "starttime": Long, // Required. Epoch Timestamp of app start. Retrieved from first event.
+    "endtime": Long, // Required. Epoch Timestamp of app end. Retrieved from last event.
+    "timespent": Double, // Required. Total time spent by visitor on app in seconds excluding idle time.
+    "pageviews": Long, // Required. Total page views per session(count of CP_IMPRESSION)
+    "interactions": Long, // Required. Count of interact events
+    "envsummary": [{ // Optional
+        "env": String, // High level env within the app (content, domain, resources, community)
+        "timespent": Double, // Time spent per env
+        "visits": Long // count of times the environment has been visited
+    }],
+    "eventssummary": [{ // Optional
+        "id": String, // event id such as CE_START, CE_END, CP_INTERACT etc.
+        "count": Long // Count of events.
+    }],
+    "pagesummary": [{ // Optional
+        "id": String, // Page id
+        "type": String, // type of page - view/edit
+        "env": String, // env of page
+        "timespent": Double, // Time taken per page
+        "visits": Long // Number of times each page was visited
+    }]
+  }
+}
+```
+
+</p>
+</details>
+
 ### API Documentation
+<details>
+<summary>Expand API Documentation</summary>
+<p>
+
+
+
+</p>
+</details>
+
 ### Intent Handling
+<details>
+<summary>Expand Intent Handling</summary>
+<p>
+
+
+
+</p>
+</details>
