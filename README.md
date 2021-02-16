@@ -80,19 +80,35 @@ https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summar
 ### API Documentation
 <details>
 <summary>Expand API Documentation</summary>
-<p>
 
-
-
-</p>
 </details>
 
 ### Intent Handling
 <details>
 <summary>Expand Intent Handling</summary>
-<p>
-
-
-
-</p>
+* Need to create an intent filter in Android Manifest as follows 
+```xml
+<activity
+    android:name="com.example.ExampleActivity"
+    android:label="@string/title_example" >
+    <intent-filter android:label="@string/play_view_web_example">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <!-- Accepts URIs that begin with "http://sunbird.staginged.in/play” -->
+        <data android:scheme="https"
+              android:host="sunbird.staginged.in"
+              android:pathPrefix="/play" />
+    </intent-filter>
+    <intent-filter android:label="@string/play_view_app_example">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <!-- Accepts URIs that begin with "example://play” -->
+        <data android:scheme="example"
+              android:host="play" />
+    </intent-filter>
+</activity>
+```
+* Implement Activity as follows
 </details>
