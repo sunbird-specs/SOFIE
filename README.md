@@ -15,7 +15,7 @@ Documentation is categorised into multiple sections:
 ## WorkFlow
 | | |
 |:-------------------------:|:----------------------------------------------:|
-|```{identifier:"",name:"",logo:"",appName:"",packageId:"",target:{mimeType:[],contentType:[],....//Allcontentattributes},appDetails:{organization:""}}```||
+|```{identifier:"",name:"",logo:"",appName:"",packageId:"",target:{mimeType:[],contentType:[],....//Allcontentattributes},appDetails:{organization:""}}```|![Alt Text](attachments/2016411649/2164949010.png)|
 ## Vendor Registration of Apps to Sunbird
 ### Global Vendor Registration API
 ## Technical Specification for third party apps
