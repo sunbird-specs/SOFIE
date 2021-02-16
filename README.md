@@ -110,5 +110,5 @@ https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summar
     </intent-filter>
 </activity>
 ```
-* Implement Activity as follows
+
 </details>
