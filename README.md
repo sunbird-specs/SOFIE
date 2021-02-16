@@ -30,8 +30,7 @@ Documentation is categorised into multiple sections:
 ### Param Data Supported
 <details>
 <summary>Expand Param Data</summary>
-<p>
-
+| | |
 | Params | Description | Data Type|
 | referrerPackageId | Package details of referrer app | String |
 | referenceID | Reference ID to be sent back to sunbird app | String |
@@ -39,15 +38,13 @@ Documentation is categorised into multiple sections:
 | authKey | Authorization Key for referrer app | String |
 | contentUrl | Url of the content | String |
 | profileContext | Name and Avatar in JSONified String | String |
-
-</p>
 </details>
 
 ### Summary Event Spec
 <details>
 <summary>Expand Summary Event</summary>
-<p>
 https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summary
+
 ```
 {
   "edata": {
@@ -77,8 +74,6 @@ https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summar
   }
 }
 ```
-
-</p>
 </details>
 
 ### API Documentation
