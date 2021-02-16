@@ -30,8 +30,9 @@ Documentation is categorised into multiple sections:
 ### Param Data Supported
 <details>
 <summary>Expand Param Data</summary>
-| | |
+
 | Params | Description | Data Type|
+| -- | -- | -- |
 | referrerPackageId | Package details of referrer app | String |
 | referenceID | Reference ID to be sent back to sunbird app | String |
 | mimeType | Content MimeType | String |
