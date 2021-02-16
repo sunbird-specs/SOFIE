@@ -84,8 +84,7 @@ https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summar
 </details>
 
 ### Intent Handling
-<details>
-<summary>Expand Intent Handling</summary>
+
 * Need to create an intent filter in Android Manifest as follows 
 ```xml
 <activity
@@ -110,5 +109,3 @@ https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summar
     </intent-filter>
 </activity>
 ```
-
-</details>
