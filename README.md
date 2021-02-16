@@ -109,3 +109,16 @@ https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summar
     </intent-filter>
 </activity>
 ```
+* Implement Activity as follows
+```
+@Override
+public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.main);
+
+    Intent intent = getIntent();
+    String action = intent.getAction();
+    Uri data = intent.getData();
+    <!-- Trigger the Business Logic of App -->
+}
+```
