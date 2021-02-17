@@ -90,7 +90,39 @@ public void onCreate(Bundle savedInstanceState) {
 ### Content Model Specification
 <details>
 <summary>Expand API Documentation</summary>
+The third party apps should do a HTTP GET call on the contentUrl parameter sent via the intent data.
 
+```
+GET intentdata.contentUrl
+
+Headers {
+  X-App-ID: <ID of the App>,
+  X-App-Version: <Version of the App>,
+  X-Device-ID: <Device Id>
+}
+```
+
+```
+{
+  "id":"api.content.read",
+  "ver":"v1",
+  "ts":"2021-02-10 04:27:14:674+0000",
+  "params":{
+    "resmsgid":null,
+    "msgid":"90e184d1-c52c-106b-c410-6a168900ef05",
+    "err":null,
+    "status":"success",
+    "errmsg":null
+  },
+  "responseCode":"OK",
+  "result": {
+    "content": ContentModel
+  }
+}
+```
+For More Details on the content model refer Sunbird Documentation.
+* content - https://github.com/sunbird-specs/LearningObjectModel/blob/main/v1/schemas/content/1.0/schema.json
+* collection - https://github.com/sunbird-specs/LearningObjectModel/blob/main/v1/schemas/collection/1.0/schema.json
 </details>
 
 ### Summary Event Specification
