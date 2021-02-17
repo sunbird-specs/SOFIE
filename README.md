@@ -16,7 +16,7 @@ Documentation is categorised into multiple sections:
 Intent of this specification is to integrate with external apps for feature extension
  (OR) feature integration of Sunbird Application.
 
-### Registration of External Apps
+
 
 ![Alt Text](attachments/2016411649/2164949010.png)
 
@@ -31,7 +31,29 @@ Intent of this specification is to integrate with external apps for feature exte
 
 
 ## Registration Spec for Apps to Sunbird
-```{identifier:"",name:"",logo:"",appName:"",packageId:"",target:{mimeType:[],contentType:[],....//Allcontentattributes},appDetails:{organization:""}}```
+Each Vendor can be registered as part of Global Configuration for Sunbird to have app links being enabled.
+
+```
+{
+  identifier: "",
+  name: "",
+  logo: "",
+  appName: "",
+  packageId: "",
+  target: {
+    mimeType: [
+      
+    ],
+    contentType: [
+      
+    ],
+    ....//Allcontentattributes
+  },
+  appDetails: {
+    organization: ""
+  }
+}
+```
 
 ## Technical Specification for third party apps
 ### Param Data Supported
