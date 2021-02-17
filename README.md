@@ -2,8 +2,8 @@
 Specification for Open Feature Integration and Extensions
 
 Documentation is categorised into multiple sections:
-* WorkFlow
-* Registration of Apps to Sunbird
+* Overview
+* Registration Spec for Apps to Sunbird
     * Global Registration API
 * Technical Specification for third party apps
     * Param Data Supported
@@ -23,12 +23,13 @@ Intent of this specification is to integrate with external apps for feature exte
 
 
 
-### Sunbird Third Party App Interaction
+#### Sunbird Third Party App Interaction
 
 ![Alt Text](attachments/2016411649/2165604363.png)
 
 ```{referrerPackageId:"com.sunbird.readAlongApp",referenceID:"App generated Code",mimeType:"",vendorCode:"",contentUrl:"",profileContext:"{handle:'',avatar:''}"}```
 
+---
 
 ## Registration Spec for Apps to Sunbird
 Each Third Party App can be registered as part of Global Configuration for Sunbird to have app links being enabled.
@@ -54,9 +55,10 @@ Each Third Party App can be registered as part of Global Configuration for Sunbi
   }
 }
 ```
+---
 
 ## Technical Specification for third party apps
-### Param Data Supported
+#### Param Data Supported
 <details>
 <summary>Expand Param Data</summary>
 
@@ -69,7 +71,8 @@ Each Third Party App can be registered as part of Global Configuration for Sunbi
 | contentUrl | Url of the content | String |
 | profileContext | Name and Avatar in JSONified String | String |
 </details>
-### Intent Handling
+
+#### Intent Handling
 
 * Need to create an intent filter in Android Manifest as follows 
 ```xml
@@ -108,8 +111,9 @@ public void onCreate(Bundle savedInstanceState) {
     <!-- Trigger the Business Logic of App -->
 }
 ```
+---
 
-### Content Model Specification
+## Content Model Specification
 <details>
 <summary>Expand API Documentation</summary>
 The third party apps should do a HTTP GET call on the contentUrl parameter sent via the intent data.
@@ -146,8 +150,8 @@ For More Details on the content model refer Sunbird Documentation.
 * content - https://github.com/sunbird-specs/LearningObjectModel/blob/main/v1/schemas/content/1.0/schema.json
 * collection - https://github.com/sunbird-specs/LearningObjectModel/blob/main/v1/schemas/collection/1.0/schema.json
 </details>
-
-### Summary Event Specification
+---
+## Summary Event Specification
 <details>
 <summary>Expand Summary Event</summary>
 https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summary
