@@ -93,7 +93,7 @@ public void onCreate(Bundle savedInstanceState) {
 
 </details>
 
-### Summary Event Specofocation
+### Summary Event Specification
 <details>
 <summary>Expand Summary Event</summary>
 https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summary
