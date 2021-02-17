@@ -1,5 +1,5 @@
 # SOFIE
-Specification for Open Feature Integration and Extensions
+A Specification for Open Feature Integration and Extensions
 
 Documentation is categorised into multiple sections:
 * Overview
