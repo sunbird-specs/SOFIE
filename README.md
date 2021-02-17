@@ -7,16 +7,14 @@ Documentation is categorised into multiple sections:
     * Global Registration API
 * Technical Specification for third party apps
     * Param Data Supported
-    * Intent Handling
+    * Android
+      * Intent Handling
 * Content Model Specification
 * Summary Event Specification    
 
 
 ## Overview
-Intent of this specification is to integrate with external apps for feature extension
- (OR) feature integration of Sunbird Application.
-
-
+Intent of this specification is to integrate with external apps for feature extension (OR) feature integration of Sunbird Application. Following diagram represents the workflow of a 3rd party or custom extensions app registering and interacting with the sunbird app.
 
 ![Alt Text](attachments/2016411649/2164949010.png)
 
@@ -27,40 +25,48 @@ Intent of this specification is to integrate with external apps for feature exte
 
 ![Alt Text](attachments/2016411649/2165604363.png)
 
-```{referrerPackageId:"com.sunbird.readAlongApp",referenceID:"App generated Code",mimeType:"",vendorCode:"",contentUrl:"",profileContext:"{handle:'',avatar:''}"}```
-
 ---
 
 ## Registration Spec for Apps to Sunbird
-Each Third Party App can be registered as part of Global Configuration for Sunbird to have app links being enabled.
 
-```
+Each third party app should be registered with Sunbird for the integrations to be enabled. The purpose of registration is to verify the authenticity of the app providing integration/extension to sunbird and also allow policy-makers (of the sunbird instance) to do appropriate review and accept the integration. 
+
+Following is the info/specificiation required for the registration. The complete API details of the registration can be found [here](https://github.com/sunbird-specs/SOFIE/blob/main/registration.md)
+
+```javascript
 {
-  identifier: "",
-  name: "",
-  logo: "",
-  appName: "",
-  packageId: "",
-  target: {
-    mimeType: [
-      
-    ],
-    contentType: [
-      
-    ],
-    ....//Allcontentattributes
-  },
-  appDetails: {
-    organization: ""
-  }
+   name: "", // Required. Name of the app. For ex: "Sunbird ReadAlong"
+   logo: "", // Required. Logo of the app. This is used to show the user to select the extension app he chooses to open with.
+   provider: {
+      name: "", // Required. Name of the company that has built the app
+      copyright: "", // Optional. Any copyright information to be shown
+      license: "" // Optional. License of the app.
+   },
+   android: {
+      packageId: "", // Required. A fully qualified app name matching play store app id. For ex: "com.sunbird.readalong.app"
+      appVersion: "", // Required. Version of the app. This is used by sunbird to check if the app is installed locally
+      compatibilityVer: "" // Required. Compatible with which version of sunbird app.
+   },
+   ios: {
+      packageId: "", // Required. A fully qualified app name matching app store app id. For ex: "com.sunbird.readalong.app"
+      appVersion: "", // Required. Version of the app. This is used by sunbird to check if the app is installed locally
+      urlScheme: "", // Required. The URL scheme of the app. Used for the app invocation.
+      compatibilityVer: "" // Required. Compatible with which version of sunbird app.
+   },
+   target: { // Required. To provided contextual targeting/linkking of the app. For ex: Show "Open With" only for PDF content.
+      mimeType: [], // Optional. Show the app in supported list only when matched the given mime types. For ex: mimeType: ["application/pdf"] would target only PDF content
+      contentType: [], // Optional. Show the app in supported list only when matched the given content type. For ex: mimeType: ["application/pdf"] would target only PDF content
+      ....// Match on all content attribute. Refer to the content model spec linked in the "Content Model Specification" section
+   }
 }
 ```
 ---
 
 ## Technical Specification for third party apps
-#### Param Data Supported
-<details>
-<summary>Expand Param Data</summary>
+
+### Param Data Supported
+
+Following is the parameters that are passed to the 3rd party either as intent data (in android) or url scheme in (iOS)
 
 | Params | Description | Data Type|
 | -- | -- | -- |
@@ -69,8 +75,9 @@ Each Third Party App can be registered as part of Global Configuration for Sunbi
 | mimeType | Content MimeType | String |
 | authKey | Authorization Key for referrer app | String |
 | contentUrl | Url of the content | String |
-| profileContext | Name and Avatar in JSONified String | String |
-</details>
+| profileContext | Basic profile info like name and avatar in JSONified String | String |
+
+### Android
 
 #### Intent Handling
 
@@ -111,6 +118,10 @@ public void onCreate(Bundle savedInstanceState) {
     <!-- Trigger the Business Logic of App -->
 }
 ```
+
+### iOS
+
+> To be added
 ---
 
 ## Content Model Specification
