@@ -150,7 +150,9 @@ For More Details on the content model refer Sunbird Documentation.
 * content - https://github.com/sunbird-specs/LearningObjectModel/blob/main/v1/schemas/content/1.0/schema.json
 * collection - https://github.com/sunbird-specs/LearningObjectModel/blob/main/v1/schemas/collection/1.0/schema.json
 </details>
+
 ---
+
 ## Summary Event Specification
 <details>
 <summary>Expand Summary Event</summary>
