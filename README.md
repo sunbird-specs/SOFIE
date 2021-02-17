@@ -86,7 +86,14 @@ public void onCreate(Bundle savedInstanceState) {
     <!-- Trigger the Business Logic of App -->
 }
 ```
-### Summary Event Spec
+
+### Content Model Specification
+<details>
+<summary>Expand API Documentation</summary>
+
+</details>
+
+### Summary Event Specofocation
 <details>
 <summary>Expand Summary Event</summary>
 https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summary
@@ -122,9 +129,5 @@ https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summar
 ```
 </details>
 
-### API Documentation
-<details>
-<summary>Expand API Documentation</summary>
 
-</details>
 
