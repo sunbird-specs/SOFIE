@@ -31,7 +31,7 @@ Intent of this specification is to integrate with external apps for feature exte
 
 
 ## Registration Spec for Apps to Sunbird
-Each Vendor can be registered as part of Global Configuration for Sunbird to have app links being enabled.
+Each Third Party App can be registered as part of Global Configuration for Sunbird to have app links being enabled.
 
 ```
 {
