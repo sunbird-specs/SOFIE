@@ -106,7 +106,7 @@ Following is the parameters that are passed to the 3rd party either as intent da
 </activity>
 ```
 * Implement Activity as follows
-```
+```java
 @Override
 public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -115,7 +115,7 @@ public void onCreate(Bundle savedInstanceState) {
     Intent intent = getIntent();
     String action = intent.getAction();
     Uri data = intent.getData();
-    <!-- Trigger the Business Logic of App -->
+    /** Trigger the Business Logic of App */
 }
 ```
 
@@ -139,22 +139,21 @@ Headers {
 }
 ```
 
-```
+```javascript
 {
-  "id":"api.content.read",
-  "ver":"v1",
-  "ts":"2021-02-10 04:27:14:674+0000",
-  "params":{
-    "resmsgid":null,
-    "msgid":"90e184d1-c52c-106b-c410-6a168900ef05",
-    "err":null,
-    "status":"success",
-    "errmsg":null
-  },
-  "responseCode":"OK",
-  "result": {
-    "content": ContentModel
-  }
+   id: "api.content.read",
+   ver: "v1",
+   ts: "2021-02-10 04:27:14:674+0000",
+   params: {
+      msgid: "90e184d1-c52c-106b-c410-6a168900ef05",
+      err: "",
+      status: "success",
+      errmsg: ""
+   },
+   responseCode: "OK",
+   result: {
+      content: {} // Refer to the content model schema defined below
+   }
 }
 ```
 For More Details on the content model refer Sunbird Documentation.
@@ -169,11 +168,11 @@ For More Details on the content model refer Sunbird Documentation.
 <summary>Expand Summary Event</summary>
 https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summary
 
-```
+```javascript
 {
   "edata": {
-    "type": "", // Required. Type of summary. Free text. "session", "app", "tool" etc
-    "mode": "", // Optional.
+    "type": String, // Required. Type of summary. Free text. "session", "app", "tool" etc
+    "mode": String, // Optional.
     "starttime": Long, // Required. Epoch Timestamp of app start. Retrieved from first event.
     "endtime": Long, // Required. Epoch Timestamp of app end. Retrieved from last event.
     "timespent": Double, // Required. Total time spent by visitor on app in seconds excluding idle time.
