@@ -3,32 +3,36 @@ Specification for Open Feature Integration and Extensions
 
 Documentation is categorised into multiple sections:
 * WorkFlow
-* Vendor Registration of Apps to Sunbird
-    * Global Vendor Registration API
+* Registration of Apps to Sunbird
+    * Global Registration API
 * Technical Specification for third party apps
     * Param Data Supported
-    * Summary Event Spec
-    * API Documentation
     * Intent Handling
+* Content Model Specification
+* Summary Event Specification    
 
 
-## WorkFlow
+## Overview
+Intent of this specification is to integrate with external apps for feature extension
+ (OR) feature integration of Sunbird Application.
 
 ### Registration of External Apps
 
 ![Alt Text](attachments/2016411649/2164949010.png)
 
-```{identifier:"",name:"",logo:"",appName:"",packageId:"",target:{mimeType:[],contentType:[],....//Allcontentattributes},appDetails:{organization:""}}```
+
 
 
 ### Sunbird Third Party App Interaction
 
 ![Alt Text](attachments/2016411649/2165604363.png)
-```{referrerPackageId:"com.google.bolo",referenceID:"App generated Code",mimeType:"",vendorCode:"",contentUrl:"",profileContext:"{handle:'',avatar:''}"}```
+
+```{referrerPackageId:"com.sunbird.readAlongApp",referenceID:"App generated Code",mimeType:"",vendorCode:"",contentUrl:"",profileContext:"{handle:'',avatar:''}"}```
 
 
-## Vendor Registration of Apps to Sunbird
-### Global Vendor Registration API
+## Registration Spec for Apps to Sunbird
+```{identifier:"",name:"",logo:"",appName:"",packageId:"",target:{mimeType:[],contentType:[],....//Allcontentattributes},appDetails:{organization:""}}```
+
 ## Technical Specification for third party apps
 ### Param Data Supported
 <details>
@@ -43,7 +47,45 @@ Documentation is categorised into multiple sections:
 | contentUrl | Url of the content | String |
 | profileContext | Name and Avatar in JSONified String | String |
 </details>
+### Intent Handling
 
+* Need to create an intent filter in Android Manifest as follows 
+```xml
+<activity
+    android:name="com.example.ExampleActivity"
+    android:label="@string/title_example" >
+    <intent-filter android:label="@string/play_view_web_example">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <!-- Accepts URIs that begin with "http://sunbird.staginged.in/play” -->
+        <data android:scheme="https"
+              android:host="sunbird.staginged.in"
+              android:pathPrefix="/play" />
+    </intent-filter>
+    <intent-filter android:label="@string/play_view_app_example">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <!-- Accepts URIs that begin with "example://play” -->
+        <data android:scheme="example"
+              android:host="play" />
+    </intent-filter>
+</activity>
+```
+* Implement Activity as follows
+```
+@Override
+public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.main);
+
+    Intent intent = getIntent();
+    String action = intent.getAction();
+    Uri data = intent.getData();
+    <!-- Trigger the Business Logic of App -->
+}
+```
 ### Summary Event Spec
 <details>
 <summary>Expand Summary Event</summary>
@@ -86,42 +128,3 @@ https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summar
 
 </details>
 
-### Intent Handling
-
-* Need to create an intent filter in Android Manifest as follows 
-```xml
-<activity
-    android:name="com.example.ExampleActivity"
-    android:label="@string/title_example" >
-    <intent-filter android:label="@string/play_view_web_example">
-        <action android:name="android.intent.action.VIEW" />
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "http://sunbird.staginged.in/play” -->
-        <data android:scheme="https"
-              android:host="sunbird.staginged.in"
-              android:pathPrefix="/play" />
-    </intent-filter>
-    <intent-filter android:label="@string/play_view_app_example">
-        <action android:name="android.intent.action.VIEW" />
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <!-- Accepts URIs that begin with "example://play” -->
-        <data android:scheme="example"
-              android:host="play" />
-    </intent-filter>
-</activity>
-```
-* Implement Activity as follows
-```
-@Override
-public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
-
-    Intent intent = getIntent();
-    String action = intent.getAction();
-    Uri data = intent.getData();
-    <!-- Trigger the Business Logic of App -->
-}
-```
