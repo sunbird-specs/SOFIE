@@ -164,6 +164,8 @@ For More Details on the content model refer Sunbird Documentation.
 ---
 
 ## Summary Event Specification
+
+All 3rd party apps are required to at-least send back a summary of the content play session as per the sunbird telemetry spec. In addition the 3rd party apps can send any event as per [Sunbird Telemetry Spec](https://github.com/sunbird-specs/Telemetry/blob/main/specification.md)
 <details>
 <summary>Expand Summary Event</summary>
 https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summary
@@ -193,6 +195,10 @@ https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summar
         "env": String, // env of page
         "timespent": Double, // Time taken per page
         "visits": Long // Number of times each page was visited
+    }],
+    "extra": [{ // Optional. Additional summary data specific to mime type or app. For ex: wordsPerMin
+        "id": String, // Required. Key for the extra data
+        "value": String // Required. Value for the extra data
     }]
   }
 }
