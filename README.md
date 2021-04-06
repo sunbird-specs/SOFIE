@@ -211,10 +211,9 @@ https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summar
 Following Intents are broadly supported as part of Sunbird App
 
 <details>  
-    <summary>
-    Expand Search Intent
-    </summary>
-    ```javascript
+    <summary>Expand Search Intent</summary>
+
+```javascript
     package: 'org.sunbird.app',
     action: 'android.intent.action.VIEW',
     extras: {
@@ -235,7 +234,7 @@ Following Intents are broadly supported as part of Sunbird App
              }
          }
     }
-    ```
+```
 </details>
 
 
@@ -243,7 +242,8 @@ Following Intents are broadly supported as part of Sunbird App
     <summary>
     Expand Play Intent
     </summary>
-    ```javascript
+
+```javascript
     package: 'org.sunbird.app',
     action: 'android.intent.action.VIEW',
     extras: {
@@ -255,14 +255,15 @@ Following Intents are broadly supported as part of Sunbird App
              }
          }
     }
-    ```
+```
 </details>
 
 <details>  
     <summary>
     Expand Action Play
     </summary>
-    ```javascript
+
+```javascript
     package: 'org.sunbird.app',
     action: 'android.intent.action.VIEW',
     extras: {
@@ -276,14 +277,15 @@ Following Intents are broadly supported as part of Sunbird App
              }
          }
     }
-    ```
+```
 </details>
 
 <details>  
     <summary>
     Expand Set Profile Intent
     </summary>
-    ```javascript
+
+```javascript
     package: 'org.sunbird.app',
     action: 'android.intent.action.VIEW',
     extras: {
@@ -301,14 +303,15 @@ Following Intents are broadly supported as part of Sunbird App
             }
          }
     }   
-    ```
+```
 </details>
 
 <details>  
     <summary>
     Expand Goto Intent
     </summary>
-    ```javascript
+    
+```javascript
     package: 'org.sunbird.app',
     action: 'android.intent.action.VIEW',
     extras: {
@@ -322,14 +325,15 @@ Following Intents are broadly supported as part of Sunbird App
              }
          }
     }
-    ```
+```
 </details>
 
 <details>  
     <summary>
     Expand Goto Intent
     </summary>
-    ```javascript
+
+```javascript
     package: 'org.sunbird.app',
     action: 'android.intent.action.VIEW',
     extras: {
@@ -340,5 +344,5 @@ Following Intents are broadly supported as part of Sunbird App
              }
          }
     }
-    ```
+```
 </details>
