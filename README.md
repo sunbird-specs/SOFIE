@@ -268,7 +268,6 @@ Following Intents are broadly supported as part of Sunbird App
     action: 'android.intent.action.VIEW',
     extras: {
          type: 'ACTION_SETPROFILE',
-         type: 'ACTION_SEARCH',
          payload: {
              request: {
                  {"filters":
