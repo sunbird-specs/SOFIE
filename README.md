@@ -210,12 +210,11 @@ https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summar
 
 Following Intents are broadly supported as part of Sunbird App
 
-* Action - Search
 <details>  
     <summary>
-    Expand Action Search
+    Expand Search Intent
     </summary>
-    ```
+    ```javascript
     package: 'org.sunbird.app',
     action: 'android.intent.action.VIEW',
     extras: {
@@ -239,12 +238,12 @@ Following Intents are broadly supported as part of Sunbird App
     ```
 </details>
 
-* Action - Play
+
 <details>  
     <summary>
-    Expand Action Play
+    Expand Play Intent
     </summary>
-    ```
+    ```javascript
     package: 'org.sunbird.app',
     action: 'android.intent.action.VIEW',
     extras: {
@@ -258,12 +257,12 @@ Following Intents are broadly supported as part of Sunbird App
     }
     ```
 </details>
-* Action - Goto
+
 <details>  
     <summary>
     Expand Action Play
     </summary>
-    ```
+    ```javascript
     package: 'org.sunbird.app',
     action: 'android.intent.action.VIEW',
     extras: {
@@ -279,12 +278,12 @@ Following Intents are broadly supported as part of Sunbird App
     }
     ```
 </details>
-* Action - SetProfile
+
 <details>  
     <summary>
     Expand Set Profile Intent
     </summary>
-    ```
+    ```javascript
     package: 'org.sunbird.app',
     action: 'android.intent.action.VIEW',
     extras: {
@@ -304,12 +303,12 @@ Following Intents are broadly supported as part of Sunbird App
     }   
     ```
 </details>
-* Action - Goto
+
 <details>  
     <summary>
     Expand Goto Intent
     </summary>
-    ```
+    ```javascript
     package: 'org.sunbird.app',
     action: 'android.intent.action.VIEW',
     extras: {
@@ -325,12 +324,12 @@ Following Intents are broadly supported as part of Sunbird App
     }
     ```
 </details>
-* Action - DeepLink
+
 <details>  
     <summary>
     Expand Goto Intent
     </summary>
-    ```
+    ```javascript
     package: 'org.sunbird.app',
     action: 'android.intent.action.VIEW',
     extras: {
