@@ -260,28 +260,6 @@ Following Intents are broadly supported as part of Sunbird App
 
 <details>  
     <summary>
-    Expand Action Play
-    </summary>
-
-```javascript
-    package: 'org.sunbird.app',
-    action: 'android.intent.action.VIEW',
-    extras: {
-         type: 'ACTION_GOTO',
-         payload: {
-             request: {
-                 "route": "routeUrl", 
-                 "params": {
-                     ....     // Can be optional
-                 }
-             }
-         }
-    }
-```
-</details>
-
-<details>  
-    <summary>
     Expand Set Profile Intent
     </summary>
 
@@ -330,7 +308,7 @@ Following Intents are broadly supported as part of Sunbird App
 
 <details>  
     <summary>
-    Expand Goto Intent
+    Expand Deeplink Intent
     </summary>
 
 ```javascript
