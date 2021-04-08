@@ -110,24 +110,41 @@ Following is the specification of the integration, the data to be passed from on
 Following is how the specification is transformed when integrated via intent.
 
 ```javascript
-// TODO:TBA
+
+Intent launchIntent = getPackageManager().getLaunchIntentForPackage("<packageID>");
+intent.putExtra("<key>","<any-serializable-object>");
+start
 ```
 
 Examples
 ```js
-// TODO:TBA
+Intent launchIntent = getPackageManager().getLaunchIntentForPackage("org.sunbird.app");
+intent.putExtra("data",{"type": 'ACTION_PLAY',
+                        "payload":{
+                            "request":{
+                                "objectId":"do_id",
+                                "collectionId": "do_id" 
+                            }
+                        }
+                    });
 ```
 
 ### Integration via DeepLink
-Following is how the specification is transformed when integrated via intent.
+Following is how the specification is transformed when integrated via deep link.
 
 ```javascript
-// TODO:TBA
+String url = "<url>";
+Intent launchIntent = new Intent(Intent.ACTION_VIEW);
+launchIntent.setData(Uri.parse(url)); 
+startActivity(launchIntent);
 ```
 
 Examples
 ```js
-// TODO:TBA
+String url = "https://staging.sunbirded.org/play/collection/do_213218179972710400129?contentId=do_3127411394178826241699";
+Intent launchIntent = new Intent(Intent.ACTION_VIEW);
+launchIntent.setData(Uri.parse(url)); 
+startActivity(launchIntent);
 ```
 
 ## Reference Example
@@ -329,12 +346,10 @@ Following Intents are broadly supported as part of Sunbird App
          type: 'ACTION_SETPROFILE',
          payload: {
              request: {
-                 {"filters":
-                    {
-                        "se_boards":["CBSE"],
-                        "se_mediums":["English"],
-                        "se_gradeLevels":["Class 10"]
-                    }
+                 {
+                    "board":["CBSE"],
+                    "medium":["English"],
+                    "gradeLevel":["Class 10"]
                 }
             }
          }
