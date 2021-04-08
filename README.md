@@ -6,23 +6,29 @@ Documentation is categorised into multiple sections:
 * Registration Spec for Apps to Sunbird
     * Global Registration API
 * Technical Specification for third party apps
-    * Param Data Supported
-    * Android
-      * Intent Handling
-* Content Model Specification
-* Summary Event Specification  
-* Inward Intent Supported from Sunbird App  
+    * Action Structure
+    * Integration Specification
+    * Integration via Intent
+    * Integration via DeepLink
+* Reference Example
 
+* Appendix
+    * Android Integration
+      * Intent Handling
+      * DeepLink Handling
+    * iOS Integration
+    * Content Model Specification
+    * Summary Event Specification    
+* Actions Supported from Sunbird App
 
 ## Overview
-Intent of this specification is to integrate with external apps for feature extension (OR) feature integration of Sunbird Application. Following diagram represents the workflow of a 3rd party or custom extensions app registering and interacting with the sunbird app.
+Intent of this specification is to integrate with external apps for feature extension (OR) feature integration of Sunbird Application. Every feature extension or integration is performed on pre-configured actions within the sunbird app. 
+
+Following diagram represents the workflow of a 3rd party or custom extensions app registering and interacting with the sunbird app.
 
 ![Alt Text](attachments/2016411649/2164949010.png)
 
-
-
-
-#### Sunbird Third Party App Interaction
+**Sunbird Third Party App Interaction**
 
 ![Alt Text](attachments/2016411649/2165604363.png)
 
@@ -43,46 +49,98 @@ Following is the info/specificiation required for the registration. The complete
       copyright: "", // Optional. Any copyright information to be shown
       license: "" // Optional. License of the app.
    },
-   android: {
+   osType: "", // Required. OS of the App. Android/iOS
+   osMetadata: { // Required. Metata of the OS
       packageId: "", // Required. A fully qualified app name matching play store app id. For ex: "com.sunbird.readalong.app"
       appVersion: "", // Required. Version of the app. This is used by sunbird to check if the app is installed locally
+      urlScheme: "", // Required for iOS. The URL scheme of the app. Used for the app invocation.
       compatibilityVer: "" // Required. Compatible with which version of sunbird app.
    },
-   ios: {
-      packageId: "", // Required. A fully qualified app name matching app store app id. For ex: "com.sunbird.readalong.app"
-      appVersion: "", // Required. Version of the app. This is used by sunbird to check if the app is installed locally
-      urlScheme: "", // Required. The URL scheme of the app. Used for the app invocation.
-      compatibilityVer: "" // Required. Compatible with which version of sunbird app.
-   },
-   target: { // Required. To provided contextual targeting/linkking of the app. For ex: Show "Open With" only for PDF content.
-      mimeType: [], // Optional. Show the app in supported list only when matched the given mime types. For ex: mimeType: ["application/pdf"] would target only PDF content
-      contentType: [], // Optional. Show the app in supported list only when matched the given content type. For ex: mimeType: ["application/pdf"] would target only PDF content
-      ....// Match on all content attribute. Refer to the content model spec linked in the "Content Model Specification" section
-   }
+   actions: [ActionData] // Actions to register with
 }
 ```
 ---
 
 ## Technical Specification for third party apps
 
-### Param Data Supported
+Every app that registers with sunbird would register for the actions supported by the app. For ex: Let us assume that the sunbird app at the content level supports actions such as "open" and "share". Any extension app which registers for these actions would be shown as available options to the user when the corresponding actions are triggered. 
 
-Following is the parameters that are passed to the 3rd party either as intent data (in android) or url scheme in (iOS)
+The technical specification is broken down into the following sections:
 
-| Params | Description | Data Type|
-| -- | -- | -- |
-| referrerPackageId | Package details of referrer app | String |
-| referenceID | Reference ID to be sent back to sunbird app | String |
-| mimeType | Content MimeType | String |
-| authKey | Authorization Key for referrer app | String |
-| contentUrl | Url of the content | String |
-| profileContext | Basic profile info like name and avatar in JSONified String | String |
+1. **Action Data Structure** - Structure of the action data
+2. **Integration Specification** - The data specification for the integration
+3. **Integration via Intent** - The data specification for the integration via intent
+4. **Integration via DeepLink** - The data specification for the integration via deeplink
 
-### Android
+
+### Action Data Structure
+
+Following is the structure of generalized action data for which an app can register for.
+
+```js
+{
+    "action": {
+        "type": "IN/OUT", // Required. Whether the action is an in-ward/out-ward actions.
+        "id": "", // Required. ID of the action. For ex: Play/Share/Search
+        "payload": "", // Optional. Payload of the action. JSON String
+        "ctx_id": "", // Optional. Context of the action. For ex: Content Id of the action is Play
+        "ctx_type": "", // Optional. Context type. For ex: Content/Assessment etc
+        "subctx_id": "", // Optional. Any Sub Context? For ex: CollectionId/TextbookId/GroupId etc
+        "subctx_type": "", // Optional. Sub context type. For ex: Course/Textbook/Group etc
+        "extra": "" // Optional. JSON String. Any extra params/data to be passed?
+    }
+}
+```
+
+### Integration Specification
+
+Following is the specification of the integration, the data to be passed from one app to another
+
+```js
+{
+    "packageId": "", // Required. Package details of referrer app
+    "referenceID": "", // Required. Reference ID to be sent back to sunbird app
+    "authKey": "", // Optional. Authorization Key for referrer app
+    "data": "" // JSON string of ActionData
+}
+```
+
+### Integration via Intent
+
+Following is how the specification is transformed when integrated via intent.
+
+```javascript
+// TODO:TBA
+```
+
+Examples
+```js
+// TODO:TBA
+```
+
+### Integration via DeepLink
+Following is how the specification is transformed when integrated via intent.
+
+```javascript
+// TODO:TBA
+```
+
+Examples
+```js
+// TODO:TBA
+```
+
+## Reference Example
+
+> TODO: TBA
+
+## Appendix
+
+### Android Integration
 
 #### Intent Handling
 
-* Need to create an intent filter in Android Manifest as follows 
+Need to create an intent filter in Android Manifest as follows 
 ```xml
 <activity
     android:name="com.example.ExampleActivity"
@@ -120,12 +178,15 @@ public void onCreate(Bundle savedInstanceState) {
 }
 ```
 
-### iOS
+#### DeepLink Handling
 
-> To be added
----
+> TODO: TBA
 
-## Content Model Specification
+### iOS Integration
+
+> TODO: TBA
+
+### Content Model Specification
 <details>
 <summary>Expand API Documentation</summary>
 The third party apps should do a HTTP GET call on the contentUrl parameter sent via the intent data.
@@ -162,9 +223,7 @@ For More Details on the content model refer Sunbird Documentation.
 * collection - https://github.com/sunbird-specs/LearningObjectModel/blob/main/v1/schemas/collection/1.0/schema.json
 </details>
 
----
-
-## Summary Event Specification
+### Summary Event Specification
 
 All 3rd party apps are required to at-least send back a summary of the content play session as per the sunbird telemetry spec. In addition the 3rd party apps can send any event as per [Sunbird Telemetry Spec](https://github.com/sunbird-specs/Telemetry/blob/main/specification.md)
 <details>
@@ -206,7 +265,7 @@ https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summar
 ```
 </details>
 
-## Inward Intent Supported from Sunbird App
+## Actions Supported from Sunbird App
 
 Following Intents are broadly supported as part of Sunbird App
 
@@ -323,3 +382,4 @@ Following Intents are broadly supported as part of Sunbird App
     }
 ```
 </details>
+
