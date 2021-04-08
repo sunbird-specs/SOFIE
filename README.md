@@ -10,7 +10,8 @@ Documentation is categorised into multiple sections:
     * Android
       * Intent Handling
 * Content Model Specification
-* Summary Event Specification    
+* Summary Event Specification  
+* Inward Intent Supported from Sunbird App  
 
 
 ## Overview
@@ -205,5 +206,120 @@ https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summar
 ```
 </details>
 
+## Inward Intent Supported from Sunbird App
+
+Following Intents are broadly supported as part of Sunbird App
+
+<details>  
+    <summary>Expand Search Intent</summary>
+
+```javascript
+    package: 'org.sunbird.app',
+    action: 'android.intent.action.VIEW',
+    extras: {
+         type: 'ACTION_SEARCH',
+         payload: {
+             request: {
+                 {"filters":
+                    {
+                        "se_boards":["CBSE"],
+                        "se_mediums":["English"],
+                        "se_gradeLevels":["Class 10"],
+                        "subject":[],
+                        "audience":[],
+                        "primaryCategory":["Digital Textbook"]},
+                        "fields":[
+                            "name","appIcon","mimeType","gradeLevel","identifier","medium","pkgVersion","board","subject","resourceType","primaryCategory","contentType","channel","organisation","trackable","se_boards","se_subjects","se_mediums","se_gradeLevels"],
+                        "facets":["subject"]}
+             }
+         }
+    }
+```
+</details>
 
 
+<details>  
+    <summary>
+    Expand Play Intent
+    </summary>
+
+```javascript
+    package: 'org.sunbird.app',
+    action: 'android.intent.action.VIEW',
+    extras: {
+         type: 'ACTION_PLAY',
+         payload: {
+             request: {
+                 "objectId": "do_id", // Can be Content ID/Question Set ID/Event Set ID/                     // Action Set ID
+                 "collection": "do_id"
+             }
+         }
+    }
+```
+</details>
+
+<details>  
+    <summary>
+    Expand Set Profile Intent
+    </summary>
+
+```javascript
+    package: 'org.sunbird.app',
+    action: 'android.intent.action.VIEW',
+    extras: {
+         type: 'ACTION_SETPROFILE',
+         payload: {
+             request: {
+                 {"filters":
+                    {
+                        "se_boards":["CBSE"],
+                        "se_mediums":["English"],
+                        "se_gradeLevels":["Class 10"]
+                    }
+                }
+            }
+         }
+    }   
+```
+</details>
+
+<details>  
+    <summary>
+    Expand Goto Intent
+    </summary>
+    
+```javascript
+    package: 'org.sunbird.app',
+    action: 'android.intent.action.VIEW',
+    extras: {
+         type: 'ACTION_GOTO',
+         payload: {
+             request: {
+                 "route": "routeUrl", 
+                 "params": {
+                     ....     // Can be optional
+                 }
+             }
+         }
+    }
+```
+</details>
+
+<details>  
+    <summary>
+    Expand Deeplink Intent
+    </summary>
+
+```javascript
+    package: 'org.sunbird.app',
+    action: 'android.intent.action.VIEW',
+    extras: {
+         type: 'ACTION_DEEPLINK',
+         payload: {
+             request: {
+                 "url": "routeUrl"
+             }
+         }
+    }
+```
+</details>
