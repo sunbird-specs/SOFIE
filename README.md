@@ -99,9 +99,9 @@ Following is the specification of the integration, the data to be passed from on
 ```js
 {
     "packageId": "", // Required. Package details of referrer app
-    "referenceID": "", // Required. Reference ID to be sent back to sunbird app
+    "referenceID": "", // Optional. Reference ID to be sent back to sunbird app
     "authKey": "", // Optional. Authorization Key for referrer app
-    "data": "" // JSON string of ActionData
+    "data": ActionData // ActionData
 }
 ```
 
@@ -110,24 +110,55 @@ Following is the specification of the integration, the data to be passed from on
 Following is how the specification is transformed when integrated via intent.
 
 ```javascript
-// TODO:TBA
+{
+    package: "", // Required. Package id of the invoking app
+    action: "android.intent.action.VIEW", // Required. A constant value specific to android
+    extras: {
+        "packageId": "", // Required. Package details of referrer app
+        "referenceID": "", // Optional. Reference ID to be sent back to sunbird app
+        "authKey": "", // Optional. Authorization Key for referrer app
+        "data": { // Action Data
+            "type": "IN/OUT", // Required. Whether the action is an in-ward/out-ward actions.
+            "id": "", // Required. ID of the action. For ex: Play/Share/Search
+            "payload": "", // Optional. Payload of the action. JSON String
+            "ctx_id": "", // Optional. Context of the action. For ex: Content Id of the action is Play
+            "ctx_type": "", // Optional. Context type. For ex: Content/Assessment etc
+            "subctx_id": "", // Optional. Any Sub Context? For ex: CollectionId/TextbookId/GroupId etc
+            "subctx_type": "", // Optional. Sub context type. For ex: Course/Textbook/Group etc
+            "extra": "" // Optional. JSON String. Any extra params/data to be passed?
+        }
+    }
+}
 ```
 
 Examples
 ```js
-// TODO:TBA
+// Example invoking an search intent on sunbird app
+{
+    package: "org.sunbird.app",
+    action: "android.intent.action.VIEW",
+    extras: {
+        packageId: "org.xyz.readalong",
+        data: {
+            type: "IN",
+            id: "Search",
+            payload: "{\"filters\":{\"se_boards\":[\"CBSE\"],\"se_mediums\":[\"English\"],\"se_gradeLevels\":[\"Class 10\"],\"subject\":[],\"audience\":[],\"primaryCategory\":[\"Digital Textbook\"]},\"fields\":[\"name\",\"appIcon\",\"mimeType\",\"gradeLevel\",\"identifier\",\"medium\",\"pkgVersion\",\"board\",\"subject\",\"resourceType\",\"primaryCategory\",\"contentType\",\"channel\",\"organisation\",\"trackable\",\"se_boards\",\"se_subjects\",\"se_mediums\",\"se_gradeLevels\"],\"facets\":[\"subject\"]}"
+        }
+    }
+}
 ```
 
 ### Integration via DeepLink
 Following is how the specification is transformed when integrated via intent.
 
 ```javascript
-// TODO:TBA
+https://<urlscheme>/sofie/?packageId=""&referenceID=""&authKey=""&data=""
 ```
 
 Examples
 ```js
-// TODO:TBA
+// Example invoking an search intent on sunbird app
+https://sunbird.org/sofie/?packageId="org.xyz.readalong"&data="{\"type\":\"IN\",\"id\":\"Search\",\"payload\":\"{\\\"filters\\\":{\\\"se_boards\\\":[\\\"CBSE\\\"],\\\"se_mediums\\\":[\\\"English\\\"],\\\"se_gradeLevels\\\":[\\\"Class 10\\\"],\\\"subject\\\":[],\\\"audience\\\":[],\\\"primaryCategory\\\":[\\\"Digital Textbook\\\"]},\\\"fields\\\":[\\\"name\\\",\\\"appIcon\\\",\\\"mimeType\\\",\\\"gradeLevel\\\",\\\"identifier\\\",\\\"medium\\\",\\\"pkgVersion\\\",\\\"board\\\",\\\"subject\\\",\\\"resourceType\\\",\\\"primaryCategory\\\",\\\"contentType\\\",\\\"channel\\\",\\\"organisation\\\",\\\"trackable\\\",\\\"se_boards\\\",\\\"se_subjects\\\",\\\"se_mediums\\\",\\\"se_gradeLevels\\\"],\\\"facets\\\":[\\\"subject\\\"]}\"}"
 ```
 
 ## Reference Example
@@ -140,7 +171,28 @@ Examples
 
 #### Intent Handling
 
-Need to create an intent filter in Android Manifest as follows 
+The following code shows on how to invoke launch intent
+
+```javascript
+Intent launchIntent = getPackageManager().getLaunchIntentForPackage("<packageID>");
+intent.putExtra("<key>","<any-serializable-object>");
+startActivity(launchIntent);
+```
+
+Example
+```js
+Intent launchIntent = getPackageManager().getLaunchIntentForPackage("org.sunbird.app");
+intent.putExtra("packageId","org.xyz.readalong");
+intent.putExtra("data",{
+            "type": "IN",
+            "id": "Search",
+            "payload": "{\"filters\":{\"se_boards\":[\"CBSE\"],\"se_mediums\":[\"English\"],\"se_gradeLevels\":[\"Class 10\"],\"subject\":[],\"audience\":[],\"primaryCategory\":[\"Digital Textbook\"]},\"fields\":[\"name\",\"appIcon\",\"mimeType\",\"gradeLevel\",\"identifier\",\"medium\",\"pkgVersion\",\"board\",\"subject\",\"resourceType\",\"primaryCategory\",\"contentType\",\"channel\",\"organisation\",\"trackable\",\"se_boards\",\"se_subjects\",\"se_mediums\",\"se_gradeLevels\"],\"facets\":[\"subject\"]}"
+        });
+startActivity(launchIntent);        
+```
+
+The following part shows on how to receive an intent
+*Need to create an intent filter in Android Manifest as follows 
 ```xml
 <activity
     android:name="com.example.ExampleActivity"
@@ -180,7 +232,22 @@ public void onCreate(Bundle savedInstanceState) {
 
 #### DeepLink Handling
 
-> TODO: TBA
+Following is how the specification is transformed when integrated via deep link.
+
+```javascript
+String url = "<url>";
+Intent launchIntent = new Intent(Intent.ACTION_VIEW);
+launchIntent.setData(Uri.parse(url)); 
+startActivity(launchIntent);
+```
+
+Examples
+```js
+String url = https://staging.sunbirded.org/sofie/?packageId="org.xyz.readalong"&data="{\"type\":\"IN\",\"id\":\"Search\",\"payload\":\"{\\\"filters\\\":{\\\"se_boards\\\":[\\\"CBSE\\\"],\\\"se_mediums\\\":[\\\"English\\\"],\\\"se_gradeLevels\\\":[\\\"Class 10\\\"],\\\"subject\\\":[],\\\"audience\\\":[],\\\"primaryCategory\\\":[\\\"Digital Textbook\\\"]},\\\"fields\\\":[\\\"name\\\",\\\"appIcon\\\",\\\"mimeType\\\",\\\"gradeLevel\\\",\\\"identifier\\\",\\\"medium\\\",\\\"pkgVersion\\\",\\\"board\\\",\\\"subject\\\",\\\"resourceType\\\",\\\"primaryCategory\\\",\\\"contentType\\\",\\\"channel\\\",\\\"organisation\\\",\\\"trackable\\\",\\\"se_boards\\\",\\\"se_subjects\\\",\\\"se_mediums\\\",\\\"se_gradeLevels\\\"],\\\"facets\\\":[\\\"subject\\\"]}\"}"
+Intent launchIntent = new Intent(Intent.ACTION_VIEW);
+launchIntent.setData(Uri.parse(url)); 
+startActivity(launchIntent);
+```
 
 ### iOS Integration
 
@@ -265,9 +332,9 @@ https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summar
 ```
 </details>
 
-## Actions Supported from Sunbird App
+### Actions Supported from Sunbird App
 
-Following Intents are broadly supported as part of Sunbird App
+Following Intents are some of the actions supported as part of Sunbird App. Please refer to the following confluence [page](<add link here>) for the updated list of available actions and their payload details
 
 <details>  
     <summary>Expand Search Intent</summary>
@@ -276,110 +343,64 @@ Following Intents are broadly supported as part of Sunbird App
     package: 'org.sunbird.app',
     action: 'android.intent.action.VIEW',
     extras: {
-         type: 'ACTION_SEARCH',
-         payload: {
-             request: {
-                 {"filters":
-                    {
-                        "se_boards":["CBSE"],
-                        "se_mediums":["English"],
-                        "se_gradeLevels":["Class 10"],
-                        "subject":[],
-                        "audience":[],
-                        "primaryCategory":["Digital Textbook"]},
-                        "fields":[
-                            "name","appIcon","mimeType","gradeLevel","identifier","medium","pkgVersion","board","subject","resourceType","primaryCategory","contentType","channel","organisation","trackable","se_boards","se_subjects","se_mediums","se_gradeLevels"],
-                        "facets":["subject"]}
-             }
-         }
+        packageId: "org.xyz.readalong",
+        data: {
+            type: "IN",
+            id: "Search",
+            payload: "{\"filters\":{\"se_boards\":[\"CBSE\"],\"se_mediums\":[\"English\"],\"se_gradeLevels\":[\"Class 10\"],\"subject\":[],\"audience\":[],\"primaryCategory\":[\"Digital Textbook\"]},\"fields\":[\"name\",\"appIcon\",\"mimeType\",\"gradeLevel\",\"identifier\",\"medium\",\"pkgVersion\",\"board\",\"subject\",\"resourceType\",\"primaryCategory\",\"contentType\",\"channel\",\"organisation\",\"trackable\",\"se_boards\",\"se_subjects\",\"se_mediums\",\"se_gradeLevels\"],\"facets\":[\"subject\"]}"
+        }
     }
 ```
 </details>
 
 
 <details>  
-    <summary>
-    Expand Play Intent
-    </summary>
+    <summary>Expand Play Intent</summary>
 
 ```javascript
     package: 'org.sunbird.app',
     action: 'android.intent.action.VIEW',
     extras: {
-         type: 'ACTION_PLAY',
-         payload: {
-             request: {
-                 "objectId": "do_id", // Can be Content ID/Question Set ID/Event Set ID/                     // Action Set ID
-                 "collection": "do_id"
-             }
-         }
+        packageId: "org.xyz.readalong",
+        data: {
+            type: "IN",
+            id: "Play",
+            payload: "{\"objectId\":\"<do_id>\",\"collection\":\"<do_id>\"}"
+        }
     }
 ```
 </details>
 
 <details>  
-    <summary>
-    Expand Set Profile Intent
-    </summary>
+    <summary>Expand Set Profile Intent</summary>
 
 ```javascript
     package: 'org.sunbird.app',
     action: 'android.intent.action.VIEW',
     extras: {
-         type: 'ACTION_SETPROFILE',
-         payload: {
-             request: {
-                 {"filters":
-                    {
-                        "se_boards":["CBSE"],
-                        "se_mediums":["English"],
-                        "se_gradeLevels":["Class 10"]
-                    }
-                }
-            }
-         }
-    }   
+        packageId: "org.xyz.readalong",
+        data: {
+            type: "IN",
+            id: "SetProfile",
+            payload: "{\"filters\":{\"se_boards\":[\"CBSE\"],\"se_mediums\":[\"English\"],\"se_gradeLevels\":[\"Class 10\"]}}"
+        }
+    }  
 ```
 </details>
 
 <details>  
-    <summary>
-    Expand Goto Intent
-    </summary>
+    <summary>Expand Page Redirection Intent</summary>
     
 ```javascript
     package: 'org.sunbird.app',
     action: 'android.intent.action.VIEW',
     extras: {
-         type: 'ACTION_GOTO',
-         payload: {
-             request: {
-                 "route": "routeUrl", 
-                 "params": {
-                     ....     // Can be optional
-                 }
-             }
-         }
+        packageId: "org.xyz.readalong",
+        data: {
+            type: "IN",
+            id: "ShowPage",
+            payload: "{\"route\":\"<routeUrl>\"}"
+        }
     }
 ```
 </details>
-
-<details>  
-    <summary>
-    Expand Deeplink Intent
-    </summary>
-
-```javascript
-    package: 'org.sunbird.app',
-    action: 'android.intent.action.VIEW',
-    extras: {
-         type: 'ACTION_DEEPLINK',
-         payload: {
-             request: {
-                 "url": "routeUrl"
-             }
-         }
-    }
-```
-</details>
-
