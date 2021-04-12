@@ -449,7 +449,7 @@ https://github.com/sunbird-specs/Telemetry/blob/main/v3_event_details.md/#summar
 
 ### Actions Supported from Sunbird App
 
-Following Intents are some of the actions supported as part of Sunbird App. Please refer to the following confluence [page](<add link here>) for the updated list of available actions and their payload details
+Following Intents are some of the actions supported as part of Sunbird App. Please refer to the following confluence [page](https://project-sunbird.atlassian.net/wiki/spaces/CON/pages/2458058753/Available+Actions+within+Sunbird+App) for the updated list of available actions and their payload details
 
 <details>  
     <summary>Expand Search Intent</summary>
