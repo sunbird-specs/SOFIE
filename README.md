@@ -163,7 +163,122 @@ https://sunbird.org/sofie/?packageId="org.xyz.readalong"&data="{\"type\":\"IN\",
 
 ## Reference Example
 
-> TODO: TBA
+### Use Case
+A third party app named "XYZ Readalong" wants to integrate with Sunbird app with the following functionality
+
+1. User logs into the Readalong app.
+2. User launches sunbird app with his preferences to search the right content
+3. Sunbird app is launched with the search results page with the search executed on the user configured preferences
+4. User browses through the content and selects a content. The user then proceeds to click "Open With" and selects the "XYZ Readalong" app displayed in the list of apps
+5. The selected data is shared with the Readalong app
+6. The user then proceeds to play the content on Readalong app
+7. The Readalong app can also index the content for future reference and other actions
+
+### Implementation
+
+Following are the steps involved in implementing the above usecase
+
+1. Register the extension app with Sunbird
+2. Invoke the Sunbird app with the required data
+3. Receive the data from Sunbird app
+4. Send any usage data to
+
+#### 1. Register as an extension app with Sunbird
+
+To register XYZ readalong as an extension to the sunbird app on android, the third party app should invoke the App Register API with the necessary details.
+
+```js
+curl --request POST 'https://sunbird.org/api/app/v1/register' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "request": {
+        "app": {
+            "name": "XYZ ReadAlong",
+            "logo": "base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==", 
+            "provider": {
+                "name": "XYZ",
+                "copyright": "Copyright XYZ 2021",
+                "license": "CCBY"
+            },
+            "osType": "android",
+            "osMetadata": { 
+                "packageId": "org.xyz.readalong",
+                "appVersion": "1.3.113",
+                "urlScheme": "https://xyz.org",
+                "compatibilityVer": "3.8.123"
+            },
+            "actions": [{ // Register for Inward Search action
+                "type": "IN",
+                "id": "Search"
+            }, { // Register for Outward play action on all content
+                "type": "OUT",
+                "id": "Play",
+                "ctx_type": "Content"
+            }]
+        }
+    }
+}'
+```
+
+Once the app is registered, the registration status would be `Draft`. It would then go through the normal curation flows configured within Sunbird and the status would be updated to `Live` post the curation process.
+
+#### 2. Invocation of the Sunbird app
+
+Once the app registration is successful and status is active, then invoke the sunbird app via intent by passing.
+
+```javascript
+// Action data when the user has selected the following preferences:
+// Board: CBSE
+// Medium: English
+// Medium: English
+// Grade: Class 10
+// Category: Digital Textbook
+{
+    package: "org.sunbird.app",
+    action: "android.intent.action.VIEW",
+    extras: {
+        packageId: "org.xyz.readalong",
+        data: {
+            type: "IN",
+            id: "Search",
+            payload: "{\"filters\":{\"se_boards\":[\"CBSE\"],\"se_mediums\":[\"English\"],\"se_gradeLevels\":[\"Class 10\"],\"subject\":[],\"audience\":[],\"primaryCategory\":[\"Digital Textbook\"]},\"fields\":[\"name\",\"appIcon\",\"mimeType\",\"gradeLevel\",\"identifier\",\"medium\",\"pkgVersion\",\"board\",\"subject\",\"resourceType\",\"primaryCategory\",\"contentType\",\"channel\",\"organisation\",\"trackable\",\"se_boards\",\"se_subjects\",\"se_mediums\",\"se_gradeLevels\"],\"facets\":[\"subject\"]}"
+        }
+    }
+}
+
+// Example code
+Intent launchIntent = getPackageManager().getLaunchIntentForPackage("org.sunbird.app");
+intent.putExtra("packageId","org.xyz.readalong");
+intent.putExtra("data",{
+            "type": "IN",
+            "id": "Search",
+            "payload": "{\"filters\":{\"se_boards\":[\"CBSE\"],\"se_mediums\":[\"English\"],\"se_gradeLevels\":[\"Class 10\"],\"subject\":[],\"audience\":[],\"primaryCategory\":[\"Digital Textbook\"]},\"fields\":[\"name\",\"appIcon\",\"mimeType\",\"gradeLevel\",\"identifier\",\"medium\",\"pkgVersion\",\"board\",\"subject\",\"resourceType\",\"primaryCategory\",\"contentType\",\"channel\",\"organisation\",\"trackable\",\"se_boards\",\"se_subjects\",\"se_mediums\",\"se_gradeLevels\"],\"facets\":[\"subject\"]}"
+        });
+startActivity(launchIntent);
+```
+
+Post this the sunbird app would be launched with the Search results page based on the search criteria passed in the action payload.
+
+#### 3. Invoke the third party app from Sunbird app
+
+Once the search results are shown, the user selects the content he is looking for and then proceeds to open with the readalong app by clicking on the "Open With" button. Sunbird app would then proceed to share the information with the ReadAlong app as shown below
+
+```js
+// Action data after the user has selected a content
+{
+    package: "org.xyz.readalong",
+    action: "android.intent.action.VIEW",
+    extras: {
+        packageId: "org.sunbird.app",
+        data: {
+            type: "OUT",
+            referenceId: "ref_12334",
+            id: "Play",
+            payload: "{\"objectId\":\"do_12234212312\",\"objectType\":\"Content\",\"objectUrl\":\"https://sunbird.org/api/v1/read/do_12234212312\",\"objMetadata\":{\"mimetype\":\"application/vnd-ekstep.ecml\",\"size\":\"1921011\"},\"profileContext\":{}}"
+        }
+    }
+}
+```
 
 ## Appendix
 
@@ -188,7 +303,7 @@ intent.putExtra("data",{
             "id": "Search",
             "payload": "{\"filters\":{\"se_boards\":[\"CBSE\"],\"se_mediums\":[\"English\"],\"se_gradeLevels\":[\"Class 10\"],\"subject\":[],\"audience\":[],\"primaryCategory\":[\"Digital Textbook\"]},\"fields\":[\"name\",\"appIcon\",\"mimeType\",\"gradeLevel\",\"identifier\",\"medium\",\"pkgVersion\",\"board\",\"subject\",\"resourceType\",\"primaryCategory\",\"contentType\",\"channel\",\"organisation\",\"trackable\",\"se_boards\",\"se_subjects\",\"se_mediums\",\"se_gradeLevels\"],\"facets\":[\"subject\"]}"
         });
-startActivity(launchIntent);        
+startActivity(launchIntent);    
 ```
 
 The following part shows on how to receive an intent
