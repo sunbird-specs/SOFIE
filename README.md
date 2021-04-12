@@ -1,5 +1,5 @@
 # SOFIE v0.5
-A Specification for Open Feature Integration and Extensions
+## Specification for Open Feature Integration and Extensions
 
 Documentation is categorised into multiple sections:
 * Overview
